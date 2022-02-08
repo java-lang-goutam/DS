@@ -14,11 +14,12 @@ public class MaxSumSubsequenceExcludingAdjacent {
 
         // initialize value
         dp[0] = arr[0];
+        dp[1] = Math.max(arr[0], arr[1]);
 
-        for (int i = 1; i < n; i++) {
+        for (int i = 2; i < n; i++) {
 
             // including i
-            int incl = (i-2)>=0 ? dp[i - 2] + arr[i] : arr[i];
+            int incl = dp[i - 2] + arr[i];
 
             // excluding i
             int excl = dp[i - 1];
@@ -27,7 +28,7 @@ public class MaxSumSubsequenceExcludingAdjacent {
 
         }
 
-        return dp[n-1];
+        return dp[n - 1];
     }
 
     public static int find_recursive(int arr[], int i) {
