@@ -49,8 +49,6 @@ public class CarsFleet {
             map.put(position[i], (target - position[i])/(double)speed[i]);
         }
 
-        System.out.println(map);
-
         int totalFleet = 0;
         double maxTime = Double.MIN_VALUE;
         for (Map.Entry<Integer, Double> entry : map.entrySet()) {
