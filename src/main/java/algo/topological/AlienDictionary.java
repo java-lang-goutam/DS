@@ -1,6 +1,7 @@
 package algo.topological;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AlienDictionary {
 
@@ -10,33 +11,33 @@ public class AlienDictionary {
         final Map<Character, Set<Character>> smallerToLargerMap = new HashMap<>();
 
         // compare alternate words
-        for(int i=0; i<words.length - 1; i++) {
+        for (int i = 0; i < words.length - 1; i++) {
             final String currentWord = words[i];
-            final String nextWord = words[i+1];
+            final String nextWord = words[i + 1];
 
             // if both words are same
             if (currentWord.equals(nextWord)) continue;
 
             // find first mismatch
-            int j=0;
-            for (; j<currentWord.length() && j < nextWord.length(); j++) {
+            int j = 0;
+            for (; j < currentWord.length() && j < nextWord.length(); j++) {
                 if (currentWord.charAt(j) != nextWord.charAt(j)) break;
             }
 
-            if (j == currentWord.length()) continue;
+            if (j == currentWord.length() || j == nextWord.length()) continue;
 
             // we have two characters and their order
-            degree.compute(nextWord.charAt(j), (k,v) -> (v == null) ? 1 : v + 1);
-            smallerToLargerMap.computeIfAbsent(currentWord.charAt(j), (k)-> new HashSet<>()).add(nextWord.charAt(j));
+            degree.compute(nextWord.charAt(j), (k, v) -> (v == null) ? 1 : v + 1);
+            degree.compute(currentWord.charAt(j), (k, v) -> (v == null) ? 0 : v);
+            smallerToLargerMap.computeIfAbsent(currentWord.charAt(j), (k) -> new HashSet<>()).add(nextWord.charAt(j));
         }
 
-        // Topological sort
-        final char firstChar = words[0].charAt(0);
-        final Queue<Character> queue = new LinkedList<>();
-        queue.offer(firstChar);
-        degree.put(firstChar, 0);
+        final Queue<Character> queue = degree.keySet().stream()
+                .filter(key -> degree.get(key) == 0)
+                .collect(Collectors.toCollection(LinkedList::new));
 
-        while(!queue.isEmpty()) {
+        // Topological sort
+        while (!queue.isEmpty()) {
             final char ele = queue.poll();
             if (degree.get(ele) == 0) {
                 order.add(ele);
@@ -49,12 +50,16 @@ public class AlienDictionary {
             }
         }
 
+        if (order.isEmpty() && words.length > 0) {
+            order.add(words[0].charAt(0));
+        }
+
         return order;
     }
 
     public static void main(String[] args) {
         final AlienDictionary dic = new AlienDictionary();
-        final String[] words = {"baa", "abcd", "abca", "cab", "cad"};
+        final String[] words = {"a", "aaa"};
         System.out.println(dic.getOrder(words));
     }
 }
