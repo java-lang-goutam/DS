@@ -44,15 +44,13 @@ import java.util.stream.*;
 public class FindRecipes {
 
     public List<String> findAllRecipes(String[] recipes,
-            List<List<String>> ingredients, String[] supplies) {
+                                       List<List<String>> ingredients, String[] supplies) {
 
         // Stores result
-        final List<String> finalRecipes = new ArrayList<>(
-                recipes.length); // can never exceed total recipes to prepare
+        final List<String> finalRecipes = new ArrayList<>(recipes.length); // can never exceed total recipes to prepare
 
         // to get supply in O(1)
-        final Set<String> suppliesSet = Stream.of(supplies).collect(
-                Collectors.toSet());
+        final Set<String> suppliesSet = Stream.of(supplies).collect(Collectors.toSet());
 
         // Stores degree of recipe
         final Map<String, Integer> degree = new HashMap<>();
@@ -95,18 +93,16 @@ public class FindRecipes {
     }
 
     public static void main(String[] args) {
-        final String[] recipes = { "bread", "sandwich", "burger" };
+        final String[] recipes = {"bread", "sandwich", "burger"};
         final List<List<String>> ingredients = new ArrayList<>();
 
         ingredients.add(Arrays.asList("yeast", "flour"));
         ingredients.add(Arrays.asList("bread", "meat"));
         ingredients.add(Arrays.asList("sandwich", "meat", "bread"));
 
-        final String[] supplies = { "yeast", "flour", "meat" };
+        final String[] supplies = {"yeast", "flour", "meat"};
 
-        System.out.println(
-                new FindRecipes().findAllRecipes(recipes, ingredients,
-                        supplies));
+        System.out.println(new FindRecipes().findAllRecipes(recipes, ingredients,supplies));
     }
 
 }
