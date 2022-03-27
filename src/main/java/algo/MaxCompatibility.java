@@ -77,7 +77,7 @@ public class MaxCompatibility {
     private int getCompatibilitySum(int[] row1, int[] row2) {
         int count = 0;
         for (int i=0; i<row1.length; i++) {
-            if (row1[i] == row2[i]) count++;
+            if (row1[i] == row2[i]) count = count + 1;
         }
         return count;
     }
