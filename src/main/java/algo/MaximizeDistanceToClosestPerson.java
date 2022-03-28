@@ -50,36 +50,28 @@ public class MaximizeDistanceToClosestPerson {
 
     public int maxDistToClosest(int[] seats) {
         int n = seats.length;
-        int[] left = new int[n];
-        int[] right = new int[n];
-        int val = -1;
-        for (int i = 0; i < n; i++) {
-            if (seats[i] == 1) {
-                val = i;
-            }
-            left[i] = val;
-        }
-
-        val = -1;
-        for (int i = n - 1; i >= 0; i--) {
-            if (seats[i] == 1) {
-                val = i;
-            }
-            right[i] = val;
-        }
 
         int max = 1;
+        int leftIndex = -1, rightIndex = 0;
         for (int i = 0; i < n; i++) {
-            if (seats[i] == 1) continue;
-            max = Math.max(max, Math.min(left[i] == -1 ? Integer.MAX_VALUE : i - left[i], right[i] == -1 ? Integer.MAX_VALUE : right[i] - i));
+            if (seats[i] == 1) {
+                leftIndex = i;
+                continue;
+            }
+
+            while (rightIndex < i || (rightIndex < n && seats[rightIndex] == 0)) {
+                rightIndex ++;
+            }
+
+            max = Math.max(max, Math.min(leftIndex == -1 ? n : i-leftIndex, rightIndex == n ? n : rightIndex-i));
         }
 
         return max;
     }
 
     public static void main(String[] args) {
-        int seats[] = {1,0,0,0,1,0,1};
-        // int seats[] = {1, 0, 0, 0};
+        // int seats[] = {1, 0, 0, 0, 1, 0, 1};
+         int seats[] = {0, 0, 1};
         System.out.println(new MaximizeDistanceToClosestPerson().maxDistToClosest(seats));
     }
 }
