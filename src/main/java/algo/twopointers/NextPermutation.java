@@ -56,19 +56,24 @@ public class NextPermutation {
     public void nextPermutation(int[] nums) {
         if (nums.length < 2) return;
 
-        int rp = nums.length - 1, lp = nums.length - 2;
-        while (lp >= 0 && nums[rp] <= nums[lp]) {
-            lp--;
-            rp--;
+        int i = nums.length - 2;
+        while (i >= 0 && nums[i + 1] <= nums[i]) i--;
+        if (i >= 0) {
+            int j = nums.length - 1;
+            while (nums[j] <= nums[i]) j--;
+            swap(nums, i, j);
         }
-        if (lp >= 0) {
-            int sm = rp;
-            for (int i = rp + 1; i < nums.length; i++) {
-                if (nums[i] < nums[sm] && nums[i] > nums[lp]) sm = i;
-            }
-            swap(nums, lp, sm);
+
+        reverse(nums, i+1);
+    }
+
+    private void reverse(int[] nums, int start) {
+        int i = start, j = nums.length - 1;
+        while (i < j) {
+            swap(nums, i, j);
+            i++;
+            j--;
         }
-        Arrays.sort(nums, rp, nums.length);
     }
 
     private void swap(int[] nums, int i, int j) {
