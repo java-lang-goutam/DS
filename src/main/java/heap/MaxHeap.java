@@ -100,5 +100,9 @@ public class MaxHeap {
         heap.insert(4);
         heap.insert(5);
         heap.print();
+
+        heap.remove();
+        heap.print();
+
     }
 }
