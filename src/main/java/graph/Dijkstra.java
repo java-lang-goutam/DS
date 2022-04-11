@@ -4,11 +4,14 @@ public class Dijkstra {
 
 	final int[][] adj;
 	final int N;
+	final int[] parent;
 	final int INF = Integer.MAX_VALUE;
+	final int NO_PARENT = -1;
 
 	public Dijkstra(final int[][] adj) {
 		this.adj = adj;
 		this.N = adj.length;
+		this.parent = new int[N];
 	}
 
 	public int[] getShortestPath(final int source) {
@@ -16,6 +19,8 @@ public class Dijkstra {
 		final boolean[] included = new boolean[N];
 
 		Arrays.fill(dist, INF);
+		Arrays.fill(parent, NO_PARENT);
+
 		dist[source] = 0;
 
 		for (int i = 0; i < N; i++) {
@@ -28,6 +33,7 @@ public class Dijkstra {
 			for (int v = 0; v < N; v++) {
 				if (!included[v] && adj[u][v] != 0 && dist[u] != INF && dist[u] + adj[u][v] < dist[v]) {
 					dist[v] = dist[u] + adj[u][v];
+					parent[v] = u;
 				}
 			}
 		}
@@ -50,7 +56,16 @@ public class Dijkstra {
 	public void printShortestPaths(final int source) {
 		final int[] dist = getShortestPath(source);
 		for (int i = 0; i < N; i++) {
-			System.out.println(source + " -> " + i + " : " + dist[i]);
+			final StringBuilder builder = new StringBuilder();
+			int j=i;
+			while(parent[j] != NO_PARENT) {
+				builder.insert(0, " -> " + j);
+				j = parent[j];
+			}
+			builder.insert(0, "[" + j);
+			builder.append("]");
+
+			System.out.println(source + " -> " + i + " : " + dist[i] + " " + builder);
 		}
 	}
 
