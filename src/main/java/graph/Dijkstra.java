@@ -57,8 +57,8 @@ public class Dijkstra {
 		final int[] dist = getShortestPath(source);
 		for (int i = 0; i < N; i++) {
 			final StringBuilder builder = new StringBuilder();
-			int j=i;
-			while(parent[j] != NO_PARENT) {
+			int j = i;
+			while (parent[j] != NO_PARENT) {
 				builder.insert(0, " -> " + j);
 				j = parent[j];
 			}
@@ -70,7 +70,7 @@ public class Dijkstra {
 	}
 
 	public static void main(String[] args) {
-		final int graph[][] = new int[][] { 
+		final int graph[][] = new int[][] {
 			{ 0, 4, 0, 0, 0, 0, 0, 8, 0 },
 			{ 4, 0, 8, 0, 0, 0, 0, 11, 0 },
 			{ 0, 8, 0, 7, 0, 4, 0, 0, 2 },
