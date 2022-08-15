@@ -2,6 +2,7 @@ import java.util.*;
 
 public class RestrictedPaths {
 
+/*
 	private class Node {
 		private int vertex, weight;
 		Node (final int vertex, final int weight) {
@@ -21,6 +22,7 @@ public class RestrictedPaths {
     }
 
 
+*/
 
 
 }
