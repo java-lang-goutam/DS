@@ -7,27 +7,22 @@ import java.util.*;
 public class FirstWord {
 
 	public String find(String[] words, String str) {
-		final Map<Character, Integer> freq = getFrequency(str);
+		Map<Character, Integer> freq = new HashMap<>();
+		for (int i=0, n = str.length(); i < n ; i++) {
+			freq.compute(str.charAt(i), (c, f) -> f == null ? 1 : 1 + f);
+		}
 
 		outer : for (String word : words) {
-			final Map<Character, Integer> currFreq = getFrequency(word);
-			for (Character ch : currFreq.keySet()) {
+			final Map<Character, Integer> currFreq = new HashMap<>();
+			for (Character ch : word.toCharArray()) {
 				int originalCount = freq.getOrDefault(ch, 0);
-				int count = currFreq.get(ch);
+				int count = currFreq.compute(ch, (k, v) -> v == null ? 1 : 1 + v);
 				if (count > originalCount) continue outer;
 			}
 			return word;
 		}
 
 		return null;
-	}
-
-	private Map<Character, Integer> getFrequency(String str) {
-		Map<Character, Integer> freq = new HashMap<>();
-		for (int i=0, n = str.length(); i < n ; i++) {
-			freq.compute(str.charAt(i), (c, f) -> f == null ? 1 : 1 + f);
-		}
-		return freq;
 	}
 
 	public static void main(String... args) {
